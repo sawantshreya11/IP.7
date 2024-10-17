@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Product Details</h1>
+      <nav>
+        <a href="index.html">Back to Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="product-details-section">
+      <div id="product-details" class="product-details-card"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Product Management API</p>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+
+    fetch(`/api/products/${productId}`)
+      .then(response => response.json())
+      .then(product => {
+        const productDetails = document.getElementById('product-details');
+        if (product) {
+          productDetails.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>Category: ${product.category}</p>
+            <p>Price: $${product.price}</p>
+          `;
+        } else {
+          productDetails.innerHTML = '<p>Product not found</p>';
+        }
+      });
+  </script>
+</body>
+</html>
